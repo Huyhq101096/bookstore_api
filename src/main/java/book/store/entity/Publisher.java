@@ -1,0 +1,22 @@
+package book.store.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+import java.util.List;
+
+@Entity
+@Table(name = "publisher")
+@Data
+@AllArgsConstructor
+public class Publisher {
+
+    @Id
+    @Column(name = "publisher_id")
+    private Integer publisherId;
+
+    @Column(name = "publisher_name")
+    private String publisherName;
+
+    @OneToMany(mappedBy = "publisher")
+    private List<Book> books;
+}
