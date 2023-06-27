@@ -18,7 +18,7 @@ public class Book {
     private Integer id;
 
     @Column(name = "title")
-    private String title;
+    private String name;
 
     @Column(name = "isbn13")
     private String isbn13;
@@ -34,6 +34,9 @@ public class Book {
 
     @Column(name = "num_pages")
     private Integer numPages;
+
+    @Column(name = "category_id")
+    private Category category;
 
     @Column(name = "publication_date")
     private LocalDate publicationDate;
