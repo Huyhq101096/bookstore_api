@@ -11,7 +11,7 @@ import lombok.*;
 public class Customer {
 
     @Id
-    @Column(name = "customer_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer customerId;
 
     @Column(name = "first_name")
@@ -22,6 +22,12 @@ public class Customer {
 
     @Column(name = "email")
     private String email;
+
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "status")
+    private String status;
 
     @OneToOne(mappedBy = "customer")
     private CustomerAddress customerAddress;

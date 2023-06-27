@@ -13,8 +13,8 @@ import java.util.List;
 public class ShippingMethod {
 
     @Id
-    @Column(name = "method_id")
-    private Integer methodId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Column(name = "method_name")
     private String methodName;

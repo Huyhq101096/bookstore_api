@@ -13,8 +13,9 @@ import java.util.List;
 public class Book {
 
     @Id
-    @Column(name = "book_id")
-    private Integer bookId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
 
     @Column(name = "title")
     private String title;
@@ -22,15 +23,24 @@ public class Book {
     @Column(name = "isbn13")
     private String isbn13;
 
-    @ManyToOne
-    @JoinColumn(name = "language_id")
-    private BookLanguage bookLanguage;
+    @Column(name = "description")
+    private String desc;
+
+    @Column(name = "quantity")
+    private int quantity;
+
+    @Column(name = "rating")
+    private float rating;
 
     @Column(name = "num_pages")
     private Integer numPages;
 
     @Column(name = "publication_date")
     private LocalDate publicationDate;
+
+    @ManyToOne
+    @JoinColumn(name = "language_id")
+    private BookLanguage bookLanguage;
 
     @ManyToOne
     @JoinColumn(name = "publisher_id")

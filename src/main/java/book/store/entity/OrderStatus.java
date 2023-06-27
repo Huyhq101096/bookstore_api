@@ -12,8 +12,8 @@ import java.util.List;
 public class OrderStatus {
 
     @Id
-    @Column(name = "status_id")
-    private Integer statusId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Column(name = "status_value")
     private String statusValue;

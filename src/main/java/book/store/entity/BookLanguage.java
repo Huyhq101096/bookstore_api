@@ -11,6 +11,7 @@ import java.util.List;
 public class BookLanguage {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "language_id")
     private Integer languageId;
 
