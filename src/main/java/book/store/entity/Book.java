@@ -35,7 +35,8 @@ public class Book {
     @Column(name = "num_pages")
     private Integer numPages;
 
-    @Column(name = "category_id")
+    @ManyToOne
+    @JoinColumn(name = "category_id")
     private Category category;
 
     @Column(name = "publication_date")
