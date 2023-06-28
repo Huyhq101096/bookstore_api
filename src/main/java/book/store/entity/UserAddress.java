@@ -11,11 +11,14 @@ import lombok.*;
 public class UserAddress {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Id
+
     @ManyToOne
     @JoinColumn(name = "address_id")
     private Address address;

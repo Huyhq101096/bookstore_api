@@ -3,6 +3,8 @@ package book.store.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "address")
 @Data
@@ -27,6 +29,7 @@ public class Address {
     @JoinColumn(name = "country_id")
     private Country country;
 
-    @OneToOne(mappedBy = "address")
-    private UserAddress customerAddress;
+    @OneToMany(mappedBy = "address")
+    private List<UserAddress> userAddresses;
+
 }

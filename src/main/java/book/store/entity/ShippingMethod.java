@@ -23,5 +23,5 @@ public class ShippingMethod {
     private BigDecimal cost;
 
     @OneToMany(mappedBy = "shippingMethod")
-    private List<UserOrder> custOrders;
+    private List<UserOrder> userOrders;
 }

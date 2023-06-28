@@ -31,8 +31,8 @@ public class User {
     @Column(name = "status")
     private String status;
 
-    @OneToOne(mappedBy = "user")
-    private UserAddress userAddress;
+    @OneToMany(mappedBy = "user")
+    private List<UserAddress> userAddresses;
 
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "user_role",

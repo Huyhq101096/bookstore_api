@@ -8,6 +8,7 @@ import java.util.List;
 @Table(name = "publisher")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Publisher {
 
     @Id

@@ -8,6 +8,7 @@ import java.util.List;
 @Table(name = "book_language")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class BookLanguage {
 
     @Id
