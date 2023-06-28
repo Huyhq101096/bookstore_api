@@ -28,5 +28,5 @@ public class Address {
     private Country country;
 
     @OneToOne(mappedBy = "address")
-    private CustomerAddress customerAddress;
+    private UserAddress customerAddress;
 }

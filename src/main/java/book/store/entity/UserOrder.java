@@ -6,11 +6,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "cust_order")
+@Table(name = "user_order")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustOrder {
+public class UserOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,8 +21,8 @@ public class CustOrder {
     private LocalDateTime orderDate;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "shipping_method_id")
@@ -32,9 +32,9 @@ public class CustOrder {
     @JoinColumn(name = "dest_address_id")
     private Address destAddress;
 
-    @OneToMany(mappedBy = "custOrder")
+    @OneToMany(mappedBy = "userOrder")
     private List<OrderLine> orderLines;
 
-    @OneToMany(mappedBy = "custOrder")
+    @OneToMany(mappedBy = "userOrder")
     private List<OrderHistory> orderHistories;
 }

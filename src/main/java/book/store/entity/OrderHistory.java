@@ -16,8 +16,8 @@ public class OrderHistory {
     private Integer historyId;
 
     @ManyToOne
-    @JoinColumn(name = "order_id")
-    private CustOrder custOrder;
+    @JoinColumn(name = "user_id")
+    private UserOrder userOrder;
 
     @ManyToOne
     @JoinColumn(name = "status_id")

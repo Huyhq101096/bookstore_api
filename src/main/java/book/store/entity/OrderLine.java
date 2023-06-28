@@ -18,7 +18,7 @@ public class OrderLine {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
-    private CustOrder custOrder;
+    private UserOrder custOrder;
 
     @ManyToOne
     @JoinColumn(name = "book_id")

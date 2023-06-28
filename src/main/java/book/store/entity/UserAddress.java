@@ -4,16 +4,16 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "customer_address")
+@Table(name = "user_address")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomerAddress {
+public class UserAddress {
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Id
     @ManyToOne
