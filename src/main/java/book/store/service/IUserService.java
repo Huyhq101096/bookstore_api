@@ -7,4 +7,6 @@ public interface IUserService {
 
     public boolean createUser(UserRq userRq);
 
+    public boolean getUserByEmail(String email);
+
 }

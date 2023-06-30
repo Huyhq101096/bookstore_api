@@ -1,5 +1,6 @@
 package book.store.payload.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,7 +20,10 @@ public class UserRq {
     @NotBlank(message = "phone cannot be left blank")
     private String phone;
 
+    @JsonProperty("first_name")
     private String firstName;
+
+    @JsonProperty("last_name")
     private String lastName;
 
 
