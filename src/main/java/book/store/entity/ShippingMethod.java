@@ -5,8 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-import java.util.List;
+import java.util.Set;
+
 
 @Entity
 @Table(name = "shipping_method")
@@ -17,14 +17,16 @@ public class ShippingMethod {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
-    @Column(name = "method_name")
-    private String methodName;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "cost")
-    private BigDecimal cost;
+    @Column(name = "price_ship")
+    private double priceShip;
 
     @OneToMany(mappedBy = "shippingMethod")
-    private List<UserOrder> userOrders;
+    private Set<Order> orders;
+
+
 }

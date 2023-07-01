@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "book")
@@ -17,8 +18,7 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+    private int id;
 
     @Column(name = "title")
     private String name;
@@ -55,4 +55,8 @@ public class Book {
 
     @OneToMany(mappedBy = "book")
     private List<BookAuthor> authors;
+
+    @OneToMany(mappedBy = "book")
+    private Set<OrderDetail> orderDetails;
+
 }
