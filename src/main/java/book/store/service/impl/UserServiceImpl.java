@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -25,8 +26,6 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     private RoleRepository roleRepository;
-
-
 
     @Override
     public boolean createUser(UserRq userRq) {
@@ -78,5 +77,14 @@ public class UserServiceImpl implements IUserService {
             }
         }
         return success;
+    }
+
+    @Override
+    public boolean checkSignin(UserRq userRq) {
+        Optional<User> user = userRepository.findByEmailAndPassword(userRq.getEmail(), userRq.getPassword());
+        if(!user.isEmpty()) {
+            return true;
+        }
+        return false;
     }
 }

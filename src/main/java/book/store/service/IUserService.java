@@ -5,8 +5,11 @@ import book.store.payload.request.UserRq;
 public interface IUserService {
 
 
-    public boolean createUser(UserRq userRq);
+    boolean createUser(UserRq userRq);
 
-    public boolean getUserByEmail(String email);
+    boolean getUserByEmail(String email);
+
+    boolean checkSignin(UserRq userRq);
+
 
 }
