@@ -17,7 +17,7 @@ public class BookLanguage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "language_id")
-    private Integer languageId;
+    private int languageId;
 
     @Column(name = "language_code")
     private String languageCode;
