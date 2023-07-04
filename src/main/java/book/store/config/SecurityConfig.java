@@ -1,9 +1,10 @@
 package book.store.config;
 
-import lombok.RequiredArgsConstructor;
+import book.store.service.impl.UserDetailServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -29,17 +30,27 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+//    @Bean
+//    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder){
+//        UserDetails admin = User.withUsername("cybersoft")
+//                .password(passwordEncoder().encode("123456"))
+//                .roles("ADMIN")
+//                .build();
+//        UserDetails user = User.withUsername("user")
+//                .password(passwordEncoder().encode("user123456"))
+//                .roles("USER")
+//                .build();
+//        return new InMemoryUserDetailsManager(admin,user);
+//    }
+
     @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder){
-        UserDetails admin = User.withUsername("cybersoft")
-                .password(passwordEncoder().encode("123456"))
-                .roles("ADMIN")
-                .build();
-        UserDetails user = User.withUsername("user")
-                .password(passwordEncoder().encode("user123456"))
-                .roles("USER")
-                .build();
-        return new InMemoryUserDetailsManager(admin,user);
+    public AuthenticationManager authenticationManager(HttpSecurity httpSecurity) throws Exception {
+        UserDetailServiceImpl customUserDetailService = new UserDetailServiceImpl();
+        return
+                httpSecurity.getSharedObject(AuthenticationManagerBuilder.class)
+                        .userDetailsService(customUserDetailService)
+                        .passwordEncoder(passwordEncoder())
+                        .and().build();
     }
 
 
@@ -51,7 +62,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorizeHttpRequests) ->
                         authorizeHttpRequests
                                 .requestMatchers("/hello").permitAll()
-                                .requestMatchers("/category/**").hasRole("ADMIN")
+//                                .requestMatchers("/category/**").hasRole("ADMIN")
                                 .requestMatchers("/admin").hasRole("ADMIN")
                                 .requestMatchers("/user").hasAnyRole("ADMIN", "USER")
                                 .anyRequest().authenticated()).httpBasic(withDefaults());
