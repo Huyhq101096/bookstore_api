@@ -1,9 +1,10 @@
 package book.store.entity;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "user_address")
@@ -18,7 +19,7 @@ public class UserAddress {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private Users user;
 
 
     @ManyToOne

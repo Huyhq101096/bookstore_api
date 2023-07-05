@@ -1,16 +1,16 @@
 package book.store.repository;
 
-import book.store.entity.User;
+import book.store.entity.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<Users, Integer> {
 
-    Optional<User> findByEmailAndPassword(String username, String password);
+    Optional<Users> findByEmailAndPassword(String username, String password);
 
-    User findByEmail(String email);
+    Users findByEmail(String email);
 
 }

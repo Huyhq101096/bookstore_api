@@ -1,12 +1,11 @@
 package book.store.entity;
 
-import jakarta.persistence.*;
+import book.store.entity.ids.OrderDetailsIds;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-import book.store.entity.ids.OrderDetailsIds;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "order_detail")

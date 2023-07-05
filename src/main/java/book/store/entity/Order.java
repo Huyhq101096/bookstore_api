@@ -1,10 +1,10 @@
 package book.store.entity;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
@@ -32,7 +32,7 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private Users user;
 
     @ManyToOne
     @JoinColumn(name = "shipping_id")

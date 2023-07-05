@@ -1,8 +1,9 @@
 package book.store.service.impl;
 
-import book.store.entity.User;
+import book.store.entity.Users;
 import book.store.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,14 +19,13 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email);
+        Users user = userRepository.findByEmail(email);
         if(user == null) {
             throw new UsernameNotFoundException("User không tồn tại");
         } else {
-            org.springframework.security.core.userdetails.User user1 =
-                    new org.springframework.security.core.userdetails
-                            .User(user.getEmail(), user.getPassword(), new ArrayList<>());
-            return user1;
+            // user này là của userDetail
+            User users = new User(user.getEmail(), user.getPassword(), new ArrayList<>());
+            return  users;
         }
 
     }

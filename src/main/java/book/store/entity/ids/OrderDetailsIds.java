@@ -1,20 +1,17 @@
 package book.store.entity.ids;
 
+import lombok.*;
+
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 @Embeddable
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderDetailsIds implements Serializable {
+
     @Column(name = "book_id")
     private int bookId;
 

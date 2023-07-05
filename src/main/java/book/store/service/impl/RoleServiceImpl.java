@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class RoleServiceImpl implements IRoleService {
@@ -17,9 +19,9 @@ public class RoleServiceImpl implements IRoleService {
     private RoleRepository roleRepository;
 
     @Override
-    public List<RoleRsp> getAllRole() {
+    public Set<RoleRsp> getAllRole() {
         List<Role> roleList = roleRepository.findAll();
-        List<RoleRsp> roleRspList = new ArrayList<>();
+        Set<RoleRsp> roleRspList = new HashSet<>();
 
         for (Role role: roleList) {
             RoleRsp roleRsp = new RoleRsp();

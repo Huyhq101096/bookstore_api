@@ -27,4 +27,10 @@ public class LoginController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @PostMapping("/signup")
+    public ResponseEntity<?> createUser(@RequestBody UserRq userRq) {
+        boolean success = iUserService.createUser(userRq);
+        return new ResponseEntity<>(success, HttpStatus.OK);
+    }
+
 }

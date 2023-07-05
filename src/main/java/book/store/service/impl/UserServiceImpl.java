@@ -1,7 +1,8 @@
 package book.store.service.impl;
 
 import book.store.entity.Role;
-import book.store.entity.User;
+import book.store.entity.Users;
+
 import book.store.payload.request.UserRq;
 import book.store.payload.response.UserRsp;
 import book.store.repository.RoleRepository;
@@ -9,11 +10,12 @@ import book.store.repository.UserRepository;
 import book.store.service.IRoleService;
 import book.store.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -22,7 +24,7 @@ public class UserServiceImpl implements IUserService {
     private UserRepository userRepository;
 
     @Autowired
-    private IRoleService iRoleService;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -30,26 +32,25 @@ public class UserServiceImpl implements IUserService {
     @Override
     public boolean createUser(UserRq userRq) {
         if (getUserByEmail(userRq.getEmail())) {
-            User user = new User();
+            Users user = new Users();
             user.setEmail(userRq.getEmail());
-            user.setPassword(userRq.getPassword());
+            user.setPassword(passwordEncoder.encode(userRq.getPassword()));
             user.setPhone(userRq.getPhone());
             user.setFirstName(userRq.getFirstName());
             user.setLastName(userRq.getLastName());
+            Set<Role> roleList = new HashSet<>();
+            Role role = roleRepository.findById(2).orElse(null);
+            System.out.println("hello");
+            if (role != null) {
+                roleList.add(role);
+            }
+            user.setRoles(roleList);
             user.setStatus("active");
 
 //            List<Role> roleList = roleRepository.findAll();
 //            List<Role> roleList1 = new ArrayList<>();
 //            roleList1.add(roleList.get(1));
 //            user.setRoles(roleList1);
-
-            List<Role> roleList = new ArrayList<>();
-            Role role = roleRepository.findById(2).orElse(null);
-            if (role != null) {
-                roleList.add(role);
-            }
-            user.setRoles(roleList);
-
             userRepository.save(user);
             return true;
         }
@@ -58,12 +59,12 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public boolean getUserByEmail(String email) {
-        List<User> list = userRepository.findAll();
+        List<Users> list = userRepository.findAll();
         if(list.isEmpty()) {
             return true;
         }
         List<UserRsp> userRspList = new ArrayList<>();
-        for (User user: list) {
+        for (Users user: list) {
             UserRsp userRsp = new UserRsp();
             userRsp.setEmail(user.getEmail());
             userRsp.setPassword(user.getPassword());
@@ -81,7 +82,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public boolean checkSignin(UserRq userRq) {
-        Optional<User> user = userRepository.findByEmailAndPassword(userRq.getEmail(), userRq.getPassword());
+        Optional<Users> user = userRepository.findByEmailAndPassword(userRq.getEmail(), userRq.getPassword());
         if(!user.isEmpty()) {
             return true;
         }

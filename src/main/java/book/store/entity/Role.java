@@ -1,12 +1,13 @@
 package book.store.entity;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
-@Table(name = "role")
+@Table(name = "roles")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,5 +20,4 @@ public class Role {
     @Column(name = "name")
     private String name;
 
-    
 }

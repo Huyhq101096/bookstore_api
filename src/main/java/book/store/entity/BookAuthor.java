@@ -1,9 +1,10 @@
 package book.store.entity;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "book_author")
@@ -13,11 +14,13 @@ import lombok.NoArgsConstructor;
 public class BookAuthor {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
     @ManyToOne
     @JoinColumn(name = "book_id")
     private Book book;
 
-    @Id
     @ManyToOne
     @JoinColumn(name = "author_id")
     private Author author;
