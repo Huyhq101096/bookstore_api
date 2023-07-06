@@ -1,12 +1,15 @@
 package book.store.config;
 
+import book.store.provider.CustomAuthenManagerProvider;
 import book.store.service.impl.UserDetailServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -16,6 +19,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    @Autowired
+    CustomAuthenManagerProvider authenManagerProvider;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -24,12 +30,19 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity httpSecurity) throws Exception {
-        UserDetailServiceImpl customUserDetailService = new UserDetailServiceImpl();
+        // Nếu sử dụng UserDetailService thì dùng cái này
+        //        UserDetailServiceImpl customUserDetailService = new UserDetailServiceImpl();
+//        return
+//                httpSecurity.getSharedObject(AuthenticationManagerBuilder.class)
+//                        .userDetailsService(customUserDetailService)
+//                        .passwordEncoder(passwordEncoder())
+//                        .and().build();
+
         return
                 httpSecurity.getSharedObject(AuthenticationManagerBuilder.class)
-                        .userDetailsService(customUserDetailService)
-                        .passwordEncoder(passwordEncoder())
-                        .and().build();
+                        .authenticationProvider(authenManagerProvider)
+                        .build();
+
     }
 
 
@@ -48,13 +61,16 @@ public class SecurityConfig {
 //         return http.build();
 
         return http.csrf().disable()
+                // không sử dụng session
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .authorizeHttpRequests()
                 .antMatchers("/login/**").permitAll()
                 .antMatchers("/role/**").permitAll()
                 .antMatchers("/hello/**").permitAll()
                 .antMatchers("/product/file/**").permitAll()
                 .anyRequest().authenticated()
-                .and().httpBasic()
+                //.and().httpBasic()// xài JWT nên phải bỏ cái này đi
                 .and().build();
     }
 
