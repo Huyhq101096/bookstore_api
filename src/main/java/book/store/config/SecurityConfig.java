@@ -4,6 +4,8 @@ import book.store.service.impl.UserDetailServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,11 +20,16 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import static org.springframework.security.config.Customizer.withDefaults;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig {
+
+    @Autowired
+    UserDetailServiceImpl userDetailServiceImpl;
 
     // MD5, SHA1, RSA ...
     @Bean
@@ -30,28 +37,39 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder){
-//        UserDetails admin = User.withUsername("cybersoft")
-//                .password(passwordEncoder().encode("123456"))
-//                .roles("ADMIN")
-//                .build();
-//        UserDetails user = User.withUsername("user")
-//                .password(passwordEncoder().encode("user123456"))
-//                .roles("USER")
-//                .build();
-//        return new InMemoryUserDetailsManager(admin,user);
-//    }
+    @Bean
+    DaoAuthenticationProvider authProvider(){
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailServiceImpl);
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
+    }
 
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity httpSecurity) throws Exception {
-        UserDetailServiceImpl customUserDetailService = new UserDetailServiceImpl();
-        return
-                httpSecurity.getSharedObject(AuthenticationManagerBuilder.class)
-                        .userDetailsService(customUserDetailService)
-                        .passwordEncoder(passwordEncoder())
-                        .and().build();
+    public ProviderManager authManagerBean(HttpSecurity security) throws Exception {
+        return (ProviderManager) security.getSharedObject(AuthenticationManagerBuilder.class)
+                .authenticationProvider(authProvider()).
+                build();
     }
+
+    // @Bean
+    // public AuthenticationManager authenticationManager() {
+    //     DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+    //     UserDetailServiceImpl userDetailService = new UserDetailServiceImpl();
+    //     authProvider.setUserDetailsService(userDetailService);
+    //     authProvider.setPasswordEncoder(passwordEncoder());
+    //     return new ProviderManager(authProvider);
+    // }
+
+    // @Bean
+    // public AuthenticationManager authenticationManager(HttpSecurity httpSecurity) throws Exception {
+    //     UserDetailServiceImpl customUserDetailService = new UserDetailServiceImpl();
+    //     return
+    //             httpSecurity.getSharedObject(AuthenticationManagerBuilder.class)
+    //                     .userDetailsService(customUserDetailService)
+    //                     .passwordEncoder(passwordEncoder())
+    //                     .and().build();
+    // }
 
 
     @Bean
@@ -62,6 +80,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorizeHttpRequests) ->
                         authorizeHttpRequests
                                 .requestMatchers("/hello").permitAll()
+                                .requestMatchers("/login/**").permitAll()
 //                                .requestMatchers("/category/**").hasRole("ADMIN")
                                 .requestMatchers("/admin").hasRole("ADMIN")
                                 .requestMatchers("/user").hasAnyRole("ADMIN", "USER")

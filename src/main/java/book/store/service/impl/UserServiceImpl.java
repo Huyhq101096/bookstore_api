@@ -9,6 +9,7 @@ import book.store.repository.UserRepository;
 import book.store.service.IRoleService;
 import book.store.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,9 @@ public class UserServiceImpl implements IUserService {
     private IRoleService iRoleService;
 
     @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
     private RoleRepository roleRepository;
 
     @Override
@@ -32,7 +36,7 @@ public class UserServiceImpl implements IUserService {
         if (getUserByEmail(userRq.getEmail())) {
             User user = new User();
             user.setEmail(userRq.getEmail());
-            user.setPassword(userRq.getPassword());
+            user.setPassword(passwordEncoder.encode(userRq.getPassword()));
             user.setPhone(userRq.getPhone());
             user.setFirstName(userRq.getFirstName());
             user.setLastName(userRq.getLastName());
