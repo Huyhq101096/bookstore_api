@@ -1,5 +1,6 @@
 package book.store.config;
 
+import book.store.provider.CustomAuthenticationProvider;
 import book.store.service.impl.UserDetailServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +32,9 @@ public class SecurityConfig {
     @Autowired
     UserDetailServiceImpl userDetailServiceImpl;
 
+    @Autowired
+    private CustomAuthenticationProvider authenticationProvider;
+
     // MD5, SHA1, RSA ...
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -38,39 +42,11 @@ public class SecurityConfig {
     }
 
     @Bean
-    DaoAuthenticationProvider authProvider(){
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailServiceImpl);
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
+    public AuthenticationManager authenticationManager(HttpSecurity httpSecurity) throws Exception {
+        return httpSecurity.getSharedObject(AuthenticationManagerBuilder.class)
+                .authenticationProvider(authenticationProvider)
+                .build();
     }
-
-    @Bean
-    public ProviderManager authManagerBean(HttpSecurity security) throws Exception {
-        return (ProviderManager) security.getSharedObject(AuthenticationManagerBuilder.class)
-                .authenticationProvider(authProvider()).
-                build();
-    }
-
-    // @Bean
-    // public AuthenticationManager authenticationManager() {
-    //     DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-    //     UserDetailServiceImpl userDetailService = new UserDetailServiceImpl();
-    //     authProvider.setUserDetailsService(userDetailService);
-    //     authProvider.setPasswordEncoder(passwordEncoder());
-    //     return new ProviderManager(authProvider);
-    // }
-
-    // @Bean
-    // public AuthenticationManager authenticationManager(HttpSecurity httpSecurity) throws Exception {
-    //     UserDetailServiceImpl customUserDetailService = new UserDetailServiceImpl();
-    //     return
-    //             httpSecurity.getSharedObject(AuthenticationManagerBuilder.class)
-    //                     .userDetailsService(customUserDetailService)
-    //                     .passwordEncoder(passwordEncoder())
-    //                     .and().build();
-    // }
-
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http)
@@ -79,7 +55,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorizeHttpRequests) ->
                         authorizeHttpRequests
-                                .requestMatchers("/hello").permitAll()
+                                .requestMatchers("/hello/**").permitAll()
                                 .requestMatchers("/login/**").permitAll()
 //                                .requestMatchers("/category/**").hasRole("ADMIN")
                                 .requestMatchers("/admin").hasRole("ADMIN")

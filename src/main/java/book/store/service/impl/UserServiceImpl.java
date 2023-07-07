@@ -9,6 +9,8 @@ import book.store.repository.UserRepository;
 import book.store.service.IRoleService;
 import book.store.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -30,6 +32,9 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @Override
     public boolean createUser(UserRq userRq) {
@@ -85,10 +90,9 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public boolean checkSignin(UserRq userRq) {
-        Optional<User> user = userRepository.findByEmailAndPassword(userRq.getEmail(), userRq.getPassword());
-        if(!user.isEmpty()) {
-            return true;
-        }
-        return false;
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(userRq.getEmail(),userRq.getPassword());
+        authenticationManager.authenticate(authenticationToken);
+        return true;
     }
 }
