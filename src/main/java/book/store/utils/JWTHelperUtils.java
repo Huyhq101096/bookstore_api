@@ -21,7 +21,9 @@ public class JWTHelperUtils {
 
     // Tạo generateSecretKey. Tạo xong thì bỏ đi.
     public static String generateSecretKey() {
+        // Tạo một khóa ngẫu nhiên với mật mã của HS.256
         SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+        // Dùng n để tạo ra một khóa bí mat
         String keyBase64 = Encoders.BASE64.encode(secretKey.getEncoded());
         return keyBase64;
     }
@@ -31,7 +33,7 @@ public class JWTHelperUtils {
         // Lấy secret key đã tạo ra sử dụng.
         // Decoders.BASE64.decode(key) hascode nó về Byte[] rồi từ byte tạo SecretKey
         //SecretKey này là của thư viện
-        SecretKey secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(key));
+            SecretKey secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(key));
         // Dùng key để tạo ra token. Sét các qui định cho token ở đây.Thời gian hết hạn ...v...v
 
         return Jwts.builder()
