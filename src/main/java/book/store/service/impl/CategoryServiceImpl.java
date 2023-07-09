@@ -21,7 +21,7 @@ public class CategoryServiceImpl implements ICategoryService {
     public List<CategoryRsp> getAllCategory() {
         List<Category> list = categoryRepository.findAll();
         List<CategoryRsp> categoryRspList = new ArrayList<>();
-        for (Category category: list) {
+        for (Category category : list) {
             CategoryRsp categoryRsp = new CategoryRsp();
             categoryRsp.setId(category.getId());
             categoryRsp.setName(category.getName());

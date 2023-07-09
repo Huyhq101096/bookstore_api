@@ -35,9 +35,9 @@ public class CustomAuthenManagerProvider implements AuthenticationProvider {
         if (users != null) {
             // So sánh password người dùng truyền vào với password Bcrypt lưu trong database
             // Mathch so sánh pass chưa mã hóa với pass đã mã hóa.
-            if(passwordEncoder.matches(password,users.getPassword())) {
+            if (passwordEncoder.matches(password, users.getPassword())) {
                 // Trùng password
-                return new UsernamePasswordAuthenticationToken(email,users.getPassword(), new ArrayList<>());
+                return new UsernamePasswordAuthenticationToken(email, users.getPassword(), new ArrayList<>());
             }
         }
 

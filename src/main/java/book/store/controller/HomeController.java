@@ -22,5 +22,5 @@ public class HomeController {
 
         return new ResponseEntity<>(jwtHelperUtils.validateToken(token), HttpStatus.OK);
     }
-    
+
 }

@@ -20,25 +20,26 @@ import java.util.ArrayList;
 public class JWTFilter extends OncePerRequestFilter {
     @Autowired
     private JWTHelperUtils jwtHelperUtils;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String header = request.getHeader("Authorization");
-        String token = header.substring(7);
+
         try {
+            String token = header.substring(7);
             String data = jwtHelperUtils.validateToken(token);
             System.out.println(data);
-            if(!data.isEmpty()) {
+            if (!data.isEmpty()) {
                 // Tạo chứng thực cho spring security
                 UsernamePasswordAuthenticationToken authenticationToken =
-                        new UsernamePasswordAuthenticationToken("","",new ArrayList<>());
+                        new UsernamePasswordAuthenticationToken("", "", new ArrayList<>());
                 SecurityContext securityContext = SecurityContextHolder.getContext();
                 securityContext.setAuthentication(authenticationToken);
             }
         } catch (Exception e) {
-            System.out.println("Token không hợp lệ");
-//            throw new RuntimeException("Token không hợp lệ");
+            System.out.println("Token không hợp lệ + : " + e);
         }
         // cho phép người dùng đi vào link cần phải xác thực. Không có hàm này cũng được.
-        filterChain.doFilter(request,response);
+        filterChain.doFilter(request, response);
     }
 }

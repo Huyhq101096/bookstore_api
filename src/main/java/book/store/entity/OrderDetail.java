@@ -22,14 +22,14 @@ public class OrderDetail {
 
     @Column(name = "quantity")
     private int quantity;
-    
+
 
     @ManyToOne
-    @JoinColumn(name = "book_id", insertable = false,updatable = false)
+    @JoinColumn(name = "book_id", insertable = false, updatable = false)
     private Book book;
 
     @ManyToOne
-    @JoinColumn(name = "order_id", insertable = false,updatable = false)
+    @JoinColumn(name = "order_id", insertable = false, updatable = false)
     private Order order;
 
 }

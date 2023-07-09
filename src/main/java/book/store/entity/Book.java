@@ -20,7 +20,7 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "title")
+    @Column(name = "name")
     private String name;
 
     @Column(name = "isbn13")
@@ -29,8 +29,14 @@ public class Book {
     @Column(name = "description")
     private String desc;
 
+    @Column(name = "price")
+    private double price;
+
     @Column(name = "quantity")
     private int quantity;
+
+    @Column(name = "image")
+    private String image;
 
     @Column(name = "rating")
     private float rating;

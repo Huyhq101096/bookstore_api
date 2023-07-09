@@ -7,7 +7,6 @@ import book.store.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,7 +22,7 @@ public class RoleServiceImpl implements IRoleService {
         List<Role> roleList = roleRepository.findAll();
         Set<RoleRsp> roleRspList = new HashSet<>();
 
-        for (Role role: roleList) {
+        for (Role role : roleList) {
             RoleRsp roleRsp = new RoleRsp();
             roleRsp.setId(role.getId());
             roleRsp.setName(role.getName());

@@ -2,16 +2,14 @@ package book.store.service.impl;
 
 import book.store.entity.Role;
 import book.store.entity.Users;
-
 import book.store.payload.request.UserRq;
 import book.store.payload.response.UserRsp;
 import book.store.repository.RoleRepository;
 import book.store.repository.UserRepository;
-import book.store.service.IRoleService;
 import book.store.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +19,11 @@ import java.util.*;
 public class UserServiceImpl implements IUserService {
 
     @Autowired
+    AuthenticationManager authenticationManager;
+    @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
-
     @Autowired
     private RoleRepository roleRepository;
 
@@ -60,18 +58,18 @@ public class UserServiceImpl implements IUserService {
     @Override
     public boolean getUserByEmail(String email) {
         List<Users> list = userRepository.findAll();
-        if(list.isEmpty()) {
+        if (list.isEmpty()) {
             return true;
         }
         List<UserRsp> userRspList = new ArrayList<>();
-        for (Users user: list) {
+        for (Users user : list) {
             UserRsp userRsp = new UserRsp();
             userRsp.setEmail(user.getEmail());
             userRsp.setPassword(user.getPassword());
             userRspList.add(userRsp);
         }
         boolean success = true;
-        for (UserRsp userRsp: userRspList) {
+        for (UserRsp userRsp : userRspList) {
             if (Objects.equals(email, userRsp.getEmail())) {
                 success = false;
                 break;
@@ -82,10 +80,10 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public boolean checkSignin(UserRq userRq) {
-        Optional<Users> user = userRepository.findByEmailAndPassword(userRq.getEmail(), userRq.getPassword());
-        if(!user.isEmpty()) {
-            return true;
-        }
-        return false;
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(userRq.getEmail(), userRq.getPassword());
+        // Thực thi chứng thực sử dụng CustomAuthenProvider nếu không thành công thì dừng code ở đây luôn.
+        authenticationManager.authenticate(authenticationToken);
+        return authenticationManager.authenticate(authenticationToken).isAuthenticated();
     }
 }

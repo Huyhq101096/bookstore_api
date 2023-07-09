@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
-import java.security.SecureRandom;
-import java.util.Base64;
 
 @Component
 public class JWTHelperUtils {
@@ -33,7 +31,7 @@ public class JWTHelperUtils {
         // Lấy secret key đã tạo ra sử dụng.
         // Decoders.BASE64.decode(key) hascode nó về Byte[] rồi từ byte tạo SecretKey
         //SecretKey này là của thư viện
-            SecretKey secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(key));
+        SecretKey secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(key));
         // Dùng key để tạo ra token. Sét các qui định cho token ở đây.Thời gian hết hạn ...v...v
 
         return Jwts.builder()

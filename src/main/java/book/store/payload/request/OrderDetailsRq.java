@@ -13,5 +13,5 @@ public class OrderDetailsRq {
     private int quantity;
     private double price;
 
-    
+
 }
