@@ -3,6 +3,8 @@ package book.store.controller;
 import book.store.payload.request.BookRq;
 import book.store.payload.response.BaseRsp;
 import book.store.service.IBookService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -11,9 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.FileNotFoundException;
@@ -25,39 +25,40 @@ import java.nio.file.StandardCopyOption;
 
 @RestController
 @RequestMapping("/books")
+@CrossOrigin
 public class BookController {
 
+
+    Logger logger = LoggerFactory.getLogger(BookController.class);
     @Value("${root.file.path}")
     private String rootPath;
-
     @Autowired
     private IBookService iBookService;
 
+    @GetMapping("/file/{filename}")
+    public ResponseEntity<?> downloadFileProduct(@PathVariable String filename) throws FileNotFoundException {
+        try {
+            // Định nghĩa đường dẫn folder lưu file
+            Path path = Paths.get(rootPath);
+            System.out.println(path);
+            // Định nghĩa đường dẫn tới file được lưu.
+            Path pathFile = path.resolve(filename);
+            System.out.println(pathFile);
+            Resource resource = new UrlResource(pathFile.toUri());
+            if (resource.exists() || resource.isReadable()) {
+                // Cho phép download file
+                return ResponseEntity.ok()
+                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
+                        .body(resource);
+            } else {
+                throw new FileNotFoundException("Không tìm thấy file");
+            }
+        } catch (Exception e) {
+            // Lỗi
+            throw new FileNotFoundException("Không thể tìm thấy file");
+        }
 
-//    @GetMapping("/file/{filename}")
-//    public ResponseEntity<?> downloadFileProduct(@PathVariable String filename) throws FileNotFoundException {
-//        try {
-//            // Định nghĩa đường dẫn folder lưu file
-//            Path path = Paths.get(rootPath);
-//            System.out.println(path);
-//            // Định nghĩa đường dẫn tới file được lưu.
-//            Path pathFile = path.resolve(filename);
-//            System.out.println(pathFile);
-//            Resource resource = new UrlResource(pathFile.toUri());
-//            if (resource.exists() || resource.isReadable()) {
-//                // Cho phép download file
-//                return ResponseEntity.ok()
-//                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
-//                        .body(resource);
-//            } else {
-//                throw new FileNotFoundException("Không tìm thấy file");
-//            }
-//        } catch (Exception e) {
-//            // Lỗi
-//            throw new FileNotFoundException("Không thể tìm thấy file");
-//        }
-//
-//    }
+    }
 
 
     @PostMapping("/addBook")
@@ -80,6 +81,12 @@ public class BookController {
             return new ResponseEntity<>("Error uploading the file", HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(baseRsp, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/getAllBook")
+    public ResponseEntity<?> getAllBook() {
+        return new ResponseEntity<>(iBookService.getAllBook(), HttpStatus.OK);
     }
 
 

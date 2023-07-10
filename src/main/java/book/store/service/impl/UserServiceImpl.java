@@ -27,6 +27,7 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     private RoleRepository roleRepository;
 
+
     @Override
     public boolean createUser(UserRq userRq) {
         if (getUserByEmail(userRq.getEmail())) {
@@ -38,7 +39,6 @@ public class UserServiceImpl implements IUserService {
             user.setLastName(userRq.getLastName());
             Set<Role> roleList = new HashSet<>();
             Role role = roleRepository.findById(2).orElse(null);
-            System.out.println("hello");
             if (role != null) {
                 roleList.add(role);
             }
@@ -86,4 +86,6 @@ public class UserServiceImpl implements IUserService {
         authenticationManager.authenticate(authenticationToken);
         return authenticationManager.authenticate(authenticationToken).isAuthenticated();
     }
+
+
 }
