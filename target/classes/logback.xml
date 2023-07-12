@@ -12,7 +12,6 @@
         </encoder>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- rollover daily -->
             <fileNamePattern>${LOG_FOLDER}/archived/debug.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy
                     class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
@@ -20,6 +19,12 @@
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
     </appender>
+
+    <!-- Cấu hình profile tắt log -->
+    <springProfile name="no-logging">
+        <logger name="com.example" level="OFF"/>
+        <!-- Các logger khác bạn muốn tắt log -->
+    </springProfile>
 
     <root level="info">
         <appender-ref ref="FILE-AUDIT" />

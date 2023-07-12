@@ -16,6 +16,8 @@ book\store\payload\request\BookRq.class
 book\store\config\SecurityConfig.class
 book\store\provider\CustomAuthenManagerProvider.class
 book\store\entity\Country.class
+book\store\utils\JWTHelperUtils.class
+book\store\config\RedisConfig.class
 book\store\filter\JWTFilter.class
 book\store\controller\LoginController.class
 book\store\controller\HomeController.class
@@ -27,6 +29,7 @@ book\store\repository\BookRepository.class
 book\store\entity\ids\OrderDetailsIds.class
 book\store\payload\response\RoleRsp.class
 book\store\service\impl\UserDetailServiceImpl.class
+book\store\provider\CustomAuthenticationProvider.class
 book\store\service\impl\CategoryServiceImpl.class
 book\store\payload\response\UserRsp.class
 book\store\payload\request\UOrderRq.class

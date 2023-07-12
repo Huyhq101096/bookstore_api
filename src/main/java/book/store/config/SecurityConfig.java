@@ -3,8 +3,6 @@ package book.store.config;
 
 import book.store.filter.JWTFilter;
 import book.store.provider.CustomAuthenManagerProvider;
-import book.store.provider.CustomAuthenticationProvider;
-import book.store.service.impl.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,8 +27,6 @@ public class SecurityConfig {
     @Autowired
     private JWTFilter jwtFilter;
 
-    @Autowired
-    private CustomAuthenticationProvider authenticationProvider;
     // MD5, SHA1, RSA ...
 
     @Bean

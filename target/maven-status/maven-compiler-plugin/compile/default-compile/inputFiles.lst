@@ -29,6 +29,7 @@ E:\Git\BookStore\bookstore_api\src\main\java\book\store\entity\Users.java
 E:\Git\BookStore\bookstore_api\src\main\java\book\store\controller\BookController.java
 E:\Git\BookStore\bookstore_api\src\main\java\book\store\payload\response\RoleRsp.java
 E:\Git\BookStore\bookstore_api\src\main\java\book\store\entity\OrderDetail.java
+E:\Git\BookStore\bookstore_api\src\main\java\book\store\config\RedisConfig.java
 E:\Git\BookStore\bookstore_api\src\main\java\book\store\entity\Book.java
 E:\Git\BookStore\bookstore_api\src\main\java\book\store\config\SecurityConfig.java
 E:\Git\BookStore\bookstore_api\src\main\java\book\store\controller\LoginController.java
