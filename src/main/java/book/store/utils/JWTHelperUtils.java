@@ -28,13 +28,14 @@ public class JWTHelperUtils {
 
 
     public String generateToken(String data) {
+
         // Lấy secret key đã tạo ra sử dụng.
         // Decoders.BASE64.decode(key) hascode nó về Byte[] rồi từ byte tạo SecretKey
         //SecretKey này là của thư viện
         SecretKey secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(key));
         // Dùng key để tạo ra token. Sét các qui định cho token ở đây.Thời gian hết hạn ...v...v
-
-        return Jwts.builder()
+        return Jwts
+                .builder()
                 .setSubject(data)
                 .signWith(secretKey)
                 .compact();
@@ -42,18 +43,15 @@ public class JWTHelperUtils {
 
 
     // JWT set gi thì phía dưới get cái đó .
-
     public String validateToken(String token) {
         SecretKey secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(key));
-        // Chuẩn bi chìa khóa để tiến hành giải mã.
-        return Jwts
-                .parserBuilder()
+
+        return Jwts.parserBuilder()
                 .setSigningKey(secretKey)
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
     }
-
 
 }

@@ -24,9 +24,9 @@ public class UserServiceImpl implements IUserService {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+
     @Autowired
     private RoleRepository roleRepository;
-
 
     @Override
     public boolean createUser(UserRq userRq) {

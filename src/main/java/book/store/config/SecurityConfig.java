@@ -1,7 +1,10 @@
 package book.store.config;
 
+
 import book.store.filter.JWTFilter;
 import book.store.provider.CustomAuthenManagerProvider;
+import book.store.provider.CustomAuthenticationProvider;
+import book.store.service.impl.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +29,10 @@ public class SecurityConfig {
     @Autowired
     private JWTFilter jwtFilter;
 
+    @Autowired
+    private CustomAuthenticationProvider authenticationProvider;
+    // MD5, SHA1, RSA ...
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -34,35 +41,16 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity httpSecurity) throws Exception {
-        // Nếu sử dụng UserDetailService thì dùng cái này
-        //        UserDetailServiceImpl customUserDetailService = new UserDetailServiceImpl();
-//        return
-//                httpSecurity.getSharedObject(AuthenticationManagerBuilder.class)
-//                        .userDetailsService(customUserDetailService)
-//                        .passwordEncoder(passwordEncoder())
-//                        .and().build();
-
         return
                 httpSecurity.getSharedObject(AuthenticationManagerBuilder.class)
                         .authenticationProvider(authenManagerProvider)
                         .build();
-
     }
 
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http)
             throws Exception {
-//        http
-//                .csrf(AbstractHttpConfigurer::disable)
-//                .authorizeHttpRequests((authorizeHttpRequests) ->
-//                        authorizeHttpRequests
-//                                .requestMatchers("/hello").permitAll()
-//                                .requestMatchers("/login/**").permitAll()
-//                                .requestMatchers("/admin").hasRole("ADMIN")
-//                                .requestMatchers("/user").hasAnyRole("ADMIN", "USER")
-//                                .anyRequest().authenticated()).httpBasic(withDefaults());
-//         return http.build();
 
         return http.csrf().disable()
                 // không sử dụng session
@@ -78,6 +66,6 @@ public class SecurityConfig {
                 // UsernamePasswordAuthenticationFilter.class hình như này là sử dụng của authenticationManager
                 .and().addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
-    }
 
+    }
 }
