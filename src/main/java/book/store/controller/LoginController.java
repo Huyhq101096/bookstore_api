@@ -40,7 +40,11 @@ public class LoginController {
     @PostMapping("/signup")
     public ResponseEntity<?> createUser(@RequestBody UserRq userRq) {
         boolean success = iUserService.createUser(userRq);
-        return new ResponseEntity<>(success, HttpStatus.OK);
+
+        BaseRsp response = new BaseRsp();
+        response.setData(success);
+        response.setMessage(success ? "Đăng ký thành công" : "Đăng ký thất bại");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }
