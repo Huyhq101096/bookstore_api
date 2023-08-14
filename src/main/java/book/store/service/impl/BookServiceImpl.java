@@ -30,4 +30,22 @@ public class BookServiceImpl implements IBookService {
         }
 
     }
+
+    @Override
+    //update
+    public boolean exist(int id) {
+        return bookRepository.existsById(id);
+    }
+
+    @Override
+    public void updateBook(int id, BookRq bookRq) {
+        Book book = bookRepository.findById(id).orElse(null);
+        if (book != null) {
+            book.setName(bookRq.getName());
+            book.setPrice(bookRq.getPrice());
+            book.setDesc(bookRq.getDesc());
+
+            bookRepository.save(book);
+        }
+    }
 }
