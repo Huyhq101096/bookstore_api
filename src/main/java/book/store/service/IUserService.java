@@ -1,5 +1,6 @@
 package book.store.service;
 
+import book.store.payload.request.AboutRq;
 import book.store.payload.request.UserRq;
 
 public interface IUserService {
@@ -10,6 +11,5 @@ public interface IUserService {
     boolean getUserByEmail(String email);
 
     boolean checkSignin(UserRq userRq);
-
 
 }

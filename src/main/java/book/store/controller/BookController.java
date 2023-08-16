@@ -1,6 +1,5 @@
 package book.store.controller;
 
-import book.store.entity.Book;
 import book.store.payload.request.BookRq;
 import book.store.payload.response.BaseRsp;
 import book.store.service.IBookService;
@@ -12,9 +11,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.FileNotFoundException;

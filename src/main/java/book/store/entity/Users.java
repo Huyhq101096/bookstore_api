@@ -49,6 +49,6 @@ public class Users {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    @OneToOne(mappedBy = "about",cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "users",cascade = CascadeType.ALL)
     private About about;
 }
