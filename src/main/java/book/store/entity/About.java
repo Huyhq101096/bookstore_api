@@ -28,7 +28,7 @@ public class About {
     @Column(name ="phone")
     private String phone;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Users_id",referencedColumnName = "id")
+    @OneToOne
+    @JoinColumn(name = "users_id")
     private Users users;
 }

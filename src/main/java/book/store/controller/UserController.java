@@ -24,6 +24,7 @@ public class UserController {
         return new ResponseEntity<>(iUserService.getUserByEmail(userRq.getEmail()), HttpStatus.OK);
     }
 
+
 //    @PostMapping("/createUser")
 //    public ResponseEntity<?> createUser(@RequestBody UserRq userRq) {
 //        boolean success = iUserService.createUser(userRq);
