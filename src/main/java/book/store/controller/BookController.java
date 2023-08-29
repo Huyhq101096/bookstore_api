@@ -99,4 +99,11 @@ public class BookController {
         iBookService.updateBook(id,bookRq);
         return new ResponseEntity<>("Sách đã được cập nhật",HttpStatus.OK);
     }
+
+    @GetMapping("/getBookDetail")
+    public ResponseEntity<?> getBookDetail(@RequestParam("id") int id) {
+        iBookService.getBookDetail(id);
+        return new ResponseEntity<>(iBookService.getBookDetail(id), HttpStatus.OK);
+    }
+
 }

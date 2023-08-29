@@ -58,6 +58,7 @@ public class SecurityConfig {
                 .antMatchers("/hello/**").permitAll()
                 .antMatchers("/product/file/**").permitAll()
                 .antMatchers("/about/**").permitAll()
+                .antMatchers("/books/**").permitAll()
                 .anyRequest().authenticated()
                 //.and().httpBasic()// xài JWT nên phải bỏ cái này đi
                 // UsernamePasswordAuthenticationFilter.class hình như này là sử dụng của authenticationManager

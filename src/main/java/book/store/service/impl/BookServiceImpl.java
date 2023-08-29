@@ -47,10 +47,18 @@ public class BookServiceImpl implements IBookService {
             BookRsp bookRsp = new BookRsp();
             bookRsp.setId(book.getId());
             bookRsp.setName(book.getName());
-            bookRsp.setImage(hostName + "/" + book.getImage());
+            bookRsp.setRating(book.getRating());
+            bookRsp.setPrice(book.getPrice());
+//            bookRsp.setImage(hostName + "/" + book.getImage());
+            bookRsp.setImage(book.getImage());
             bookRsps.add(bookRsp);
         }
         return bookRsps;
+    }
+
+    @Override
+    public boolean exist(int id) {
+        return false;
     }
 
     @Override
@@ -63,5 +71,21 @@ public class BookServiceImpl implements IBookService {
 
             bookRepository.save(book);
         }
+    }
+
+    @Override
+    public BookRsp getBookDetail(int id) {
+        Book book = bookRepository.findById(id).orElse(null);
+        BookRsp bookRsp = new BookRsp();
+        if (book != null) {
+            bookRsp.setId(book.getId());
+            bookRsp.setPrice(book.getPrice());
+            bookRsp.setImage(book.getImage());
+            bookRsp.setName(book.getName());
+            bookRsp.setDesc(book.getDesc());
+            bookRsp.setRating(book.getRating());
+            return bookRsp;
+        }
+        return null;
     }
 }

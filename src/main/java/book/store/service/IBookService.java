@@ -13,4 +13,10 @@ public interface IBookService {
 
     boolean exist(int id);
     void updateBook(int id,BookRq bookRq);
+
+
+    BookRsp getBookDetail(int id);
+
+
+
 }
