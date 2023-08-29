@@ -1,6 +1,7 @@
 package book.store.payload.response;
 
 
+import book.store.entity.Author;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +11,9 @@ public class BookRsp {
 
     private int id;
     private String name;
+    private double price;
     private String image;
     private String desc;
-    private String rating;
+    private float rating;
+//    private Author author;
 }
