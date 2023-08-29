@@ -3,6 +3,8 @@ package book.store.controller;
 import book.store.payload.request.BookRq;
 import book.store.payload.response.BaseRsp;
 import book.store.service.IBookService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -23,14 +25,16 @@ import java.nio.file.StandardCopyOption;
 
 @RestController
 @RequestMapping("/books")
+@CrossOrigin
 public class BookController {
+
+    Logger logger = LoggerFactory.getLogger(BookController.class);
 
     @Value("${root.file.path}")
     private String rootPath;
 
     @Autowired
     private IBookService iBookService;
-
 
     @GetMapping("/file/{filename}")
     public ResponseEntity<?> downloadFileProduct(@PathVariable String filename) throws FileNotFoundException {
@@ -79,6 +83,13 @@ public class BookController {
         }
         return new ResponseEntity<>(baseRsp, HttpStatus.OK);
     }
+
+
+    @GetMapping("/getAllBook")
+    public ResponseEntity<?> getAllBook() {
+        return new ResponseEntity<>(iBookService.getAllBook(), HttpStatus.OK);
+    }
+
 
     @PostMapping("/updateBook/{id}")
     public ResponseEntity<?> updateBook(@PathVariable int id, @RequestBody BookRq bookRq) {

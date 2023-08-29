@@ -27,6 +27,7 @@ public class UserServiceImpl implements IUserService {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+
     @Autowired
     private RoleRepository roleRepository;
 
@@ -44,7 +45,6 @@ public class UserServiceImpl implements IUserService {
             user.setLastName(userRq.getLastName());
             Set<Role> roleList = new HashSet<>();
             Role role = roleRepository.findById(2).orElse(null);
-            System.out.println("hello");
             if (role != null) {
                 roleList.add(role);
             }

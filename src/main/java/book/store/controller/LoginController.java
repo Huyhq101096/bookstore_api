@@ -24,11 +24,8 @@ public class LoginController {
 
     @PostMapping("/signin")
     public ResponseEntity<?> signin(@RequestBody UserRq userRq) {
-
         boolean success = iUserService.checkSignin(userRq);
-        // Tạo token
         String token = jwtHelperUtils.generateToken(userRq.getEmail());
-
         BaseRsp response = new BaseRsp();
         response.setMessage(success ? "Login Success" : "Login Fail");
         response.setData(token);
