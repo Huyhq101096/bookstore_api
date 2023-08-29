@@ -19,7 +19,7 @@ public class AboutController {
     public ResponseEntity<?> addAbout(@RequestBody AboutRq aboutRq){
 
         iAboutService.addAbout(aboutRq);
-        System.out.println(iAboutService.addAbout(aboutRq));
+//        System.out.println(iAboutService.addAbout(aboutRq));
         return new ResponseEntity<>("", HttpStatus.OK);
     }
 
