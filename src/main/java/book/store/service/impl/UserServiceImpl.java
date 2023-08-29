@@ -1,9 +1,12 @@
 package book.store.service.impl;
 
+import book.store.entity.About;
 import book.store.entity.Role;
 import book.store.entity.Users;
+import book.store.payload.request.AboutRq;
 import book.store.payload.request.UserRq;
 import book.store.payload.response.UserRsp;
+import book.store.repository.AboutRepository;
 import book.store.repository.RoleRepository;
 import book.store.repository.UserRepository;
 import book.store.service.IUserService;
@@ -27,6 +30,9 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private AboutRepository aboutRepository;
 
     @Override
     public boolean createUser(UserRq userRq) {
@@ -86,6 +92,5 @@ public class UserServiceImpl implements IUserService {
         authenticationManager.authenticate(authenticationToken);
         return authenticationManager.authenticate(authenticationToken).isAuthenticated();
     }
-
 
 }

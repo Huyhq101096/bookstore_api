@@ -52,4 +52,16 @@ public class BookServiceImpl implements IBookService {
         }
         return bookRsps;
     }
+
+    @Override
+    public void updateBook(int id, BookRq bookRq) {
+        Book book = bookRepository.findById(id).orElse(null);
+        if (book != null) {
+            book.setName(bookRq.getName());
+            book.setPrice(bookRq.getPrice());
+            book.setDesc(bookRq.getDesc());
+
+            bookRepository.save(book);
+        }
+    }
 }

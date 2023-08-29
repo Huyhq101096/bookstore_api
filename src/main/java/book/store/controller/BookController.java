@@ -28,10 +28,11 @@ import java.nio.file.StandardCopyOption;
 @CrossOrigin
 public class BookController {
 
-
     Logger logger = LoggerFactory.getLogger(BookController.class);
+
     @Value("${root.file.path}")
     private String rootPath;
+
     @Autowired
     private IBookService iBookService;
 
@@ -90,4 +91,12 @@ public class BookController {
     }
 
 
+    @PostMapping("/updateBook/{id}")
+    public ResponseEntity<?> updateBook(@PathVariable int id, @RequestBody BookRq bookRq) {
+        if (!iBookService.exist(id)){
+            return  new ResponseEntity<>("Sản phẩm không tồn tại",HttpStatus.NOT_FOUND);
+        }
+        iBookService.updateBook(id,bookRq);
+        return new ResponseEntity<>("Sách đã được cập nhật",HttpStatus.OK);
+    }
 }

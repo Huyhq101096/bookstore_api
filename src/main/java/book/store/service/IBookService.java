@@ -11,4 +11,6 @@ public interface IBookService {
 
     List<BookRsp> getAllBook();
 
+    boolean exist(int id);
+    void updateBook(int id,BookRq bookRq);
 }
