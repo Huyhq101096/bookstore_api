@@ -1,15 +1,14 @@
 package book.store.entity;
 
 import book.store.entity.ids.OrderDetailsIds;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "order_detail")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderDetail {

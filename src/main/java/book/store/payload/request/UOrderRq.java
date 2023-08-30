@@ -11,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 public class UOrderRq {
 
-    private List<OrderDetailsRq> order;
+    private double totalPrice;
+    private List<OrderDetailRq> order;
 
 }
