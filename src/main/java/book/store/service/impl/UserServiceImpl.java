@@ -50,11 +50,6 @@ public class UserServiceImpl implements IUserService {
             }
             user.setRoles(roleList);
             user.setStatus("active");
-
-//            List<Role> roleList = roleRepository.findAll();
-//            List<Role> roleList1 = new ArrayList<>();
-//            roleList1.add(roleList.get(1));
-//            user.setRoles(roleList1);
             userRepository.save(user);
             return true;
         }
