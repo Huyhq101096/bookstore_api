@@ -1,9 +1,9 @@
 package book.store.repository;
 
-import book.store.entity.About;
+import book.store.entity.OrderDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AboutRepository extends JpaRepository<About,Integer> {
+public interface OrderDetailRepository extends JpaRepository<OrderDetail, Integer> {
 }

@@ -28,6 +28,12 @@ public class About {
     @Column(name ="phone")
     private String phone;
 
+    @Column(name ="description")
+    private String desc;
+
+    @Column(name = "image")
+    private String image;
+
     @OneToOne
     @JoinColumn(name = "users_id")
     private Users users;

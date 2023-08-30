@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 public class OrderDetailsRq {
 
     private int id;
+    private String name;
+    private String image;
     private int quantity;
     private double price;
 

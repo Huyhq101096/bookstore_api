@@ -28,7 +28,7 @@ public class Order {
     private Set<OrderDetail> orderDetails;
 
     @Column(name = "price")
-    private BigDecimal price;
+    private double price;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
