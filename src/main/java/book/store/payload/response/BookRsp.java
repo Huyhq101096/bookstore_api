@@ -15,5 +15,6 @@ public class BookRsp {
     private String image;
     private String desc;
     private float rating;
-//    private Author author;
+
+    private String author;
 }

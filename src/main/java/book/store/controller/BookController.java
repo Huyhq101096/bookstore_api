@@ -87,6 +87,7 @@ public class BookController {
 
     @GetMapping("/getAllBook")
     public ResponseEntity<?> getAllBook() {
+        iBookService.getAllBook();
         return new ResponseEntity<>(iBookService.getAllBook(), HttpStatus.OK);
     }
 

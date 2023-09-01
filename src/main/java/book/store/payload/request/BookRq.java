@@ -1,5 +1,6 @@
 package book.store.payload.request;
 
+import book.store.entity.Publisher;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
@@ -7,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Setter
 @Getter
@@ -26,5 +28,9 @@ public class BookRq {
     private int quantity;
 
     private int categoryId;
+
+    private float rating;
+
+    private Publisher publisherId;
 
 }
